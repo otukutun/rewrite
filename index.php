@@ -25,7 +25,7 @@
       <input type='submit' value='変換'>
     </form>
     </div>
-
+    <?php include('template/replaced_sentence.php'); ?>  
   </div>
 
 </div><!-- /.container -->
