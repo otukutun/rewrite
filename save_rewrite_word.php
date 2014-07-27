@@ -21,7 +21,7 @@ $rewrite_words = explode(',', $rewrite_words);
 $rewrite_words = array_filter($rewrite_words, function($w) {
   if (!empty($w)) return $w;
 });
-//既に登録されている場合は警告を出す
+// 既に登録されている場合は警告を出す
 if (($handle = fopen($rewrite_word_list, "r")) !== FALSE) {
   while (($data = fgetcsv($handle, 1000,",")) !== FALSE) {
     $data[0] = mb_convert_encoding($data[0], "UTF-8", "SJIS");
@@ -34,7 +34,7 @@ if (($handle = fopen($rewrite_word_list, "r")) !== FALSE) {
   }
   fclose($handle);
 }
-//既に登録されている場合は警告を出す
+// 既に登録されている場合は警告を出す
 // ファイル書き込み1列目が置き換え対象文字,2列目以降が置き換え後の文字
 if (isset($rewrite_words)) {
   $fp = fopen($rewrite_word_list, 'a');

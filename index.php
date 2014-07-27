@@ -37,32 +37,27 @@
     <br><br>
     <hr>
     <div>
-<!--    <h2>CSVファイルをアップロード</h2>
-     <form method="POST" class="form-horizontal" role="form" action="upload.php">
-      <div class="form-group">
-        <label for="inputRewrite" class="col-sm-2 control-label">元の単語</label>
-        <div class="col-sm-10">
-          <textarea name='rewrite' class="form-control" rows="3" id='inputRewrite'></textarea><br>
-        </div>
-        <div class="form-group">
+    <h2>CSVファイルをアップロード</h2>
+     <form method="POST" class="form-horizontal" role="form" action="upload.php" enctype="multipart/form-data">
+       <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
               <label>
-                <input type='checkbox' name='shuffle' value='true'>文でシャッフル<br>
+                <input type='file' name='csv'><br>
               </label>
             </div>
           </div>
         </div>
        <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">変換</button>
+            <button type="submit" class="btn btn-primary">アップロード</button>
           </div>
         </div>
     </form>
     </div>
     <br><br>
     <hr>
--->
+
     <div>
     <h2>置き換え</h2>
     <form method="POST" class="form-horizontal" role="form" action="rewrite.php">
