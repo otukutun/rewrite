@@ -21,6 +21,9 @@ if (!is_file($rewrite_word_list)) {
 $registed_words = array();
 if (($handle = fopen($rewrite_word_list, "r")) !== FALSE) {
   while (($data = fgetcsv($handle, 1000,",")) !== FALSE) {
+    array_walk($data, function(&$l) {
+      $l = mb_convert_encoding($l, "UTF-8", "SJIS");
+    });
     $registed_words[] = $data;
   }
   fclose($handle);

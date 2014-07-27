@@ -21,10 +21,10 @@ $rewrite_words = explode(',', $rewrite_words);
 $rewrite_words = array_filter($rewrite_words, function($w) {
   if (!empty($w)) return $w;
 });
-
 //既に登録されている場合は警告を出す
 if (($handle = fopen($rewrite_word_list, "r")) !== FALSE) {
   while (($data = fgetcsv($handle, 1000,",")) !== FALSE) {
+    $data[0] = mb_convert_encoding($data[0], "UTF-8", "SJIS");
     if ($source_word == $data[0]) {
       $_SESSION['message'] = '既にその文字は登録されています。';
       fclose($handle);
@@ -34,11 +34,15 @@ if (($handle = fopen($rewrite_word_list, "r")) !== FALSE) {
   }
   fclose($handle);
 }
+//既に登録されている場合は警告を出す
 // ファイル書き込み1列目が置き換え対象文字,2列目以降が置き換え後の文字
 if (isset($rewrite_words)) {
   $fp = fopen($rewrite_word_list, 'a');
   $list[] = $source_word;
   $list = array_merge($list, $rewrite_words);
+  array_walk($list, function(&$l) {
+    $l = mb_convert_encoding($l, "SJIS", "UTF-8");
+  });
   fputcsv($fp, $list);
   fclose($fp);
   $_SESSION['message'] = '登録完了しました。';
