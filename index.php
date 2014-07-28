@@ -44,6 +44,7 @@
             <div class="checkbox">
               <label>
                 <input type='file' name='csv'><br>
+                <br>*csvファイルは置き換え前文字列,置き換え後文字列のフォーマットにしてください。*例)「東京,オリンピック,ワールドカップ」<br>
               </label>
             </div>
           </div>

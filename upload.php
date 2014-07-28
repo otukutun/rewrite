@@ -11,7 +11,7 @@ if (empty($_FILES['csv']['name'])) {
 }
 
 $uploaddir = './';
-$uploadfile = $uploaddir . basename($_FILES['csv']['name']);
+$uploadfile = $uploaddir . mt_rand(0, 100) . basename($_FILES['csv']['name']);
 
 if (!move_uploaded_file($_FILES['csv']['tmp_name'], $uploadfile)) {
   $_SESSION['message'] = 'ファイルアップロードに失敗しました';
@@ -70,19 +70,17 @@ array_walk($rewrite_lists, function(&$l) use ($upload_lists) {
 });
 
 // 新規登録のみ
-$new_words = array_map(function($l) use ($upload_lists) {
-  $flag = false;
-  foreach ($upload_lists as $u) {
-      if ($l[0] == $u[0]) {
-        $flag = true;
-      }
+$new_words = array_map(function($u) use ($rewrite_lists) {
+  $flag = true;
+  foreach ($rewrite_lists as $r) {
+       if ($r[0] == $u[0]) {
+         $flag = false;
+       }
   }
-
-  if ($flag == false) {
-  // $flag = false;
+  if ($flag) {
     return $u;
   }
-}, $rewrite_lists);
+}, $upload_lists);
 
 $rewrite_lists = array_merge($rewrite_lists, $new_words);
 
