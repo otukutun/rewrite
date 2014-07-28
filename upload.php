@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('./func.php');
 $rewrite_word_list = 'rewrite_word_list.csv';
 
 // バリデーション
@@ -78,24 +79,18 @@ $new_words = array_map(function($l) use ($upload_lists) {
   }
 
   if ($flag == false) {
+  // $flag = false;
     return $u;
   }
 }, $rewrite_lists);
 
 $rewrite_lists = array_merge($rewrite_lists, $new_words);
 
-// 既に登録されている場合は警告を出す
-// ファイル書き込み1列目が置き換え対象文字,2列目以降が置き換え後の文字
+// csvファイル作成
 unlink($rewrite_word_list);
-$fp = fopen($rewrite_word_list, 'w');
-array_walk_recursive($rewrite_lists, function (&$l) {
-  $l = mb_convert_encoding($l, "SJIS", "UTF-8");
-});
-foreach($rewrite_lists as $l) {
-  fputcsv($fp, $l);
-}
-fclose($fp);
+write_csv($rewrite_word_list, $rewrite_lists);
 $_SESSION['message'] = '登録完了しました。';
 header("Location: index.php");
+exit();
 
 ?>
