@@ -32,6 +32,7 @@
     <hr>
     <div>
     <h2>CSVファイルをダウンロード</h2>
+      <input type="button" value="ダウンロード" class="btn btn-primary" onClick="location.href='./download.php'">
       <a href="./rewrite_word_list.csv" target="_brank">CSVファイルをダウンロード</a>
     </div>
     <br><br>
