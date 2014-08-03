@@ -20,16 +20,18 @@ if (!move_uploaded_file($_FILES['csv']['tmp_name'], $uploadfile)) {
 }
 
 // ファイル有無確認
-if (!is_file($rewrite_word_list)) {
-  touch($rewrite_word_list);
-}
+// if (!is_file($rewrite_word_list)) {
+//   touch($rewrite_word_list);
+// }
 
 // file_get_content
-$buf = file_get_contents($uploadfile);
-$buf = ereg_replace("\r\n|\r|\n","\n",$buf);
-$fp = tmpfile();
-fwrite($fp, $buf);
-rewind($fp);
+ini_set('auto_detect_line_endings', true);
+$fp = fopen($uploadfile, "r");
+if (!$fp) {
+  $_SESSION['message'] = '登録失敗しました';
+  header("Location: index.php");
+  exit();
+}
 
 //uploadファイルを取り出し
 $upload_lists = array();
@@ -59,13 +61,13 @@ if (($handle = fopen($rewrite_word_list, "r")) !== FALSE) {
 // 既存のデータに追加
 array_walk($rewrite_lists, function(&$l) use ($upload_lists) {
   foreach ($upload_lists as $u) {
-      if ($l[0] == $u[0]) {
+    if ($l[0] == $u[0]) {
       array_shift($u); 
       $l_first = array_shift($l); 
       $l = array_merge($l, $u);
       $l = array_unique($l);
       array_unshift($l, $l_first);
-      }
+    }
   }
 });
 
@@ -73,9 +75,9 @@ array_walk($rewrite_lists, function(&$l) use ($upload_lists) {
 $new_words = array_map(function($u) use ($rewrite_lists) {
   $flag = true;
   foreach ($rewrite_lists as $r) {
-       if ($r[0] == $u[0]) {
-         $flag = false;
-       }
+    if ($r[0] == $u[0]) {
+      $flag = false;
+    }
   }
   if ($flag) {
     return $u;
