@@ -19,16 +19,12 @@ if (!move_uploaded_file($_FILES['csv']['tmp_name'], $uploadfile)) {
   exit();
 }
 
-// ファイル有無確認
-// if (!is_file($rewrite_word_list)) {
-//   touch($rewrite_word_list);
-// }
-
 // file_get_content
 ini_set('auto_detect_line_endings', true);
 $fp = fopen($uploadfile, "r");
 if (!$fp) {
   $_SESSION['message'] = '登録失敗しました';
+  unlink($uploadfile);
   header("Location: index.php");
   exit();
 }
