@@ -83,7 +83,9 @@ $new_words = array_map(function($u) use ($rewrite_lists) {
 }, $upload_lists);
 
 // 空文字削除
-$new_words = array_filter($new_words, 'strlen');
+foreach ($new_words as &$word) {
+    $word = array_filter($word, 'strlen');
+}
 
 $rewrite_lists = array_merge($rewrite_lists, $new_words);
 
