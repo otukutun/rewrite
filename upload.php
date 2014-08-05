@@ -62,6 +62,8 @@ array_walk($rewrite_lists, function(&$l) use ($upload_lists) {
       $l_first = array_shift($l); 
       $l = array_merge($l, $u);
       $l = array_unique($l);
+      // 空文字削除
+      $l = array_filter($l, 'strlen');
       array_unshift($l, $l_first);
     }
   }
@@ -79,6 +81,9 @@ $new_words = array_map(function($u) use ($rewrite_lists) {
     return $u;
   }
 }, $upload_lists);
+
+// 空文字削除
+$new_words = array_filter($new_words, 'strlen');
 
 $rewrite_lists = array_merge($rewrite_lists, $new_words);
 
